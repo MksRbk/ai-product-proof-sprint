@@ -1,0 +1,663 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AI Product Proof Sprint</title>
+    <meta
+      name="description"
+      content="14-денний AI Product Sprint для PM, BA та Project спеціалістів, які хочуть показати роботодавцю живий MVP з першими метриками."
+    >
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #101521;
+        --ink-soft: #334155;
+        --paper: #f8fafc;
+        --line: #d9e2ec;
+        --blue: #0ea5e9;
+        --green: #10b981;
+        --amber: #f59e0b;
+        --rose: #e11d48;
+        --white: #ffffff;
+        --shadow: 0 18px 55px rgba(15, 23, 42, 0.16);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: var(--paper);
+        color: var(--ink);
+        letter-spacing: 0;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .nav {
+        position: fixed;
+        z-index: 20;
+        top: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        padding: 18px clamp(18px, 5vw, 64px);
+        color: var(--white);
+        background: rgba(16, 21, 33, 0.72);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      }
+
+      .brand {
+        font-weight: 800;
+        font-size: 1rem;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        font-size: 0.93rem;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: rgba(255, 255, 255, 0.86);
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
+        padding: 0 20px;
+        border: 0;
+        border-radius: 8px;
+        color: #07111f;
+        background: var(--green);
+        font-weight: 800;
+        font-size: 0.96rem;
+        text-decoration: none;
+        cursor: pointer;
+        box-shadow: 0 12px 28px rgba(16, 185, 129, 0.24);
+      }
+
+      .button:hover {
+        transform: translateY(-1px);
+      }
+
+      .hero {
+        min-height: 88svh;
+        display: grid;
+        align-items: center;
+        padding: 112px clamp(20px, 5vw, 72px) 52px;
+        background-image:
+          linear-gradient(90deg, rgba(5, 10, 20, 0.7), rgba(5, 10, 20, 0.25) 58%, rgba(5, 10, 20, 0.12)),
+          url("assets/hero-dashboard.png");
+        background-size: cover;
+        background-position: center;
+        color: var(--white);
+      }
+
+      .hero-inner {
+        width: min(780px, 100%);
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin: 0 0 22px;
+        color: rgba(255, 255, 255, 0.84);
+        font-size: 0.95rem;
+        font-weight: 700;
+      }
+
+      .eyebrow::before {
+        content: "";
+        width: 28px;
+        height: 3px;
+        border-radius: 999px;
+        background: var(--green);
+      }
+
+      h1 {
+        margin: 0;
+        max-width: 760px;
+        font-size: clamp(2.5rem, 7vw, 5.8rem);
+        line-height: 0.98;
+        font-weight: 900;
+        letter-spacing: 0;
+      }
+
+      .hero p {
+        max-width: 690px;
+        margin: 28px 0 0;
+        color: rgba(255, 255, 255, 0.88);
+        font-size: clamp(1.08rem, 2.1vw, 1.45rem);
+        line-height: 1.45;
+      }
+
+      .hero-actions {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        flex-wrap: wrap;
+        margin-top: 32px;
+      }
+
+      .price {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.95rem;
+      }
+
+      .band {
+        padding: 64px clamp(20px, 5vw, 72px);
+      }
+
+      .band.white {
+        background: var(--white);
+      }
+
+      .wrap {
+        width: min(1160px, 100%);
+        margin: 0 auto;
+      }
+
+      .section-head {
+        max-width: 760px;
+        margin-bottom: 30px;
+      }
+
+      .section-head h2 {
+        margin: 0;
+        font-size: clamp(2rem, 4vw, 3.25rem);
+        line-height: 1.05;
+      }
+
+      .section-head p {
+        margin: 16px 0 0;
+        color: var(--ink-soft);
+        font-size: 1.08rem;
+        line-height: 1.6;
+      }
+
+      .proof-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .proof {
+        min-height: 220px;
+        padding: 24px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--white);
+        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+      }
+
+      .proof .num {
+        width: 38px;
+        height: 38px;
+        display: grid;
+        place-items: center;
+        margin-bottom: 22px;
+        border-radius: 8px;
+        color: var(--white);
+        background: var(--ink);
+        font-weight: 900;
+      }
+
+      .proof h3 {
+        margin: 0;
+        font-size: 1.18rem;
+      }
+
+      .proof p {
+        margin: 12px 0 0;
+        color: var(--ink-soft);
+        line-height: 1.58;
+      }
+
+      .outcome {
+        display: grid;
+        grid-template-columns: 0.92fr 1.08fr;
+        gap: 28px;
+        align-items: start;
+      }
+
+      .outcome-panel {
+        padding: 30px;
+        border-radius: 8px;
+        background: var(--ink);
+        color: var(--white);
+        box-shadow: var(--shadow);
+      }
+
+      .outcome-panel h2 {
+        margin: 0;
+        font-size: clamp(1.8rem, 3.4vw, 3rem);
+        line-height: 1.08;
+      }
+
+      .outcome-panel p {
+        margin: 18px 0 0;
+        color: rgba(255, 255, 255, 0.76);
+        line-height: 1.6;
+      }
+
+      .artifact-list {
+        display: grid;
+        gap: 12px;
+      }
+
+      .artifact {
+        display: grid;
+        grid-template-columns: 48px 1fr;
+        gap: 16px;
+        align-items: center;
+        padding: 18px;
+        border-radius: 8px;
+        border: 1px solid var(--line);
+        background: var(--white);
+      }
+
+      .artifact strong {
+        display: block;
+        font-size: 1rem;
+      }
+
+      .artifact span {
+        display: block;
+        margin-top: 5px;
+        color: var(--ink-soft);
+        line-height: 1.45;
+      }
+
+      .icon {
+        width: 48px;
+        height: 48px;
+        display: grid;
+        place-items: center;
+        border-radius: 8px;
+        color: var(--white);
+        font-weight: 900;
+      }
+
+      .blue { background: var(--blue); }
+      .green { background: var(--green); }
+      .amber { background: var(--amber); }
+      .rose { background: var(--rose); }
+
+      .form-layout {
+        display: grid;
+        grid-template-columns: 0.82fr 1.18fr;
+        gap: 32px;
+      }
+
+      .form-copy {
+        padding-top: 8px;
+      }
+
+      .form-copy h2 {
+        margin: 0;
+        font-size: clamp(2rem, 4vw, 3.15rem);
+        line-height: 1.05;
+      }
+
+      .form-copy p {
+        margin: 18px 0 0;
+        color: var(--ink-soft);
+        line-height: 1.62;
+      }
+
+      form {
+        display: grid;
+        gap: 14px;
+        padding: 24px;
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        box-shadow: var(--shadow);
+      }
+
+      label {
+        display: grid;
+        gap: 7px;
+        color: #1f2937;
+        font-weight: 750;
+        font-size: 0.93rem;
+      }
+
+      input,
+      select,
+      textarea {
+        width: 100%;
+        min-height: 46px;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        padding: 11px 13px;
+        font: inherit;
+        color: var(--ink);
+        background: #fbfdff;
+      }
+
+      textarea {
+        min-height: 96px;
+        resize: vertical;
+      }
+
+      input:focus,
+      select:focus,
+      textarea:focus {
+        outline: 3px solid rgba(14, 165, 233, 0.22);
+        border-color: var(--blue);
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .note {
+        margin: 0;
+        color: #64748b;
+        font-size: 0.9rem;
+        line-height: 1.45;
+      }
+
+      .success {
+        display: none;
+        padding: 14px 16px;
+        border-radius: 8px;
+        color: #064e3b;
+        background: #d1fae5;
+        font-weight: 800;
+      }
+
+      .success.visible {
+        display: block;
+      }
+
+      footer {
+        padding: 34px clamp(20px, 5vw, 72px);
+        color: rgba(255, 255, 255, 0.72);
+        background: var(--ink);
+        font-size: 0.92rem;
+      }
+
+      footer .wrap {
+        display: flex;
+        justify-content: space-between;
+        gap: 18px;
+        flex-wrap: wrap;
+      }
+
+      @media (max-width: 860px) {
+        .nav {
+          position: absolute;
+        }
+
+        .nav-links a:not(.button) {
+          display: none;
+        }
+
+        .hero {
+          min-height: 86svh;
+          padding-top: 104px;
+          background-position: 57% center;
+        }
+
+        .proof-grid,
+        .outcome,
+        .form-layout,
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+
+        .band {
+          padding-top: 48px;
+          padding-bottom: 48px;
+        }
+      }
+
+      @media (max-width: 520px) {
+        .nav {
+          padding: 14px 16px;
+        }
+
+        .brand {
+          max-width: 170px;
+        }
+
+        .button {
+          width: 100%;
+        }
+
+        .nav .button {
+          width: auto;
+          min-height: 42px;
+          padding: 0 14px;
+          font-size: 0.88rem;
+        }
+
+        .hero-actions {
+          align-items: stretch;
+        }
+
+        .artifact,
+        .proof,
+        form,
+        .outcome-panel {
+          padding: 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="nav" aria-label="Головна навігація">
+      <div class="brand">AI Product Proof Sprint</div>
+      <div class="nav-links">
+        <a href="#why">Чому зараз</a>
+        <a href="#outcomes">Результат</a>
+        <a class="button" href="#apply">Податися</a>
+      </div>
+    </nav>
+
+    <main>
+      <section class="hero">
+        <div class="hero-inner">
+          <div class="eyebrow">14 днів · перша група · 20 місць</div>
+          <h1>AI Product Proof Sprint</h1>
+          <p>
+            Для PM / BA / Project спеціалістів, які хочуть показати роботодавцю
+            не сертифікат, а живий MVP з першими метриками.
+          </p>
+          <div class="hero-actions">
+            <a class="button" href="#apply">Податися в першу групу</a>
+            <span class="price">Early bird: $99 · відбір за короткою заявкою</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="band white" id="why">
+        <div class="wrap">
+          <div class="section-head">
+            <h2>Чому це потрібно саме зараз</h2>
+            <p>
+              Ринок уже переповнений курсами, але роботодавцю потрібен доказ:
+              проблема, ICP, landing, трафік, метрики і рішення на даних.
+            </p>
+          </div>
+          <div class="proof-grid">
+            <article class="proof">
+              <div class="num">1</div>
+              <h3>AI змінив очікування до PM-ролей</h3>
+              <p>
+                PM має швидко перевіряти попит, працювати з даними й запускати
+                з AI/no-code інструментами, а не тільки писати вимоги.
+              </p>
+            </article>
+            <article class="proof">
+              <div class="num">2</div>
+              <h3>Сертифікатів багато, доказів запуску мало</h3>
+              <p>
+                Portfolio case з реальним landing, CTA і метриками сильніше
+                пояснює рівень кандидата, ніж ще один рядок у CV.
+              </p>
+            </article>
+            <article class="proof">
+              <div class="num">3</div>
+              <h3>MVP можна перевірити без великої команди</h3>
+              <p>
+                Достатньо чіткої проблеми, messaging, одного CTA, no-code stack
+                і 72 годин першого targeted traffic, щоб отримати сигнал.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="band" id="outcomes">
+        <div class="wrap outcome">
+          <div class="outcome-panel">
+            <h2>На виході не курс, а доказ роботи</h2>
+            <p>
+              Спринт зібраний навколо одного результату: маленький, але реальний
+              product launch, який можна показати у CV, LinkedIn або на співбесіді.
+            </p>
+          </div>
+          <div class="artifact-list">
+            <div class="artifact">
+              <div class="icon blue">ICP</div>
+              <div>
+                <strong>Проблема, ICP і value proposition</strong>
+                <span>Опис сегмента, контексту купівлі та головного болю.</span>
+              </div>
+            </div>
+            <div class="artifact">
+              <div class="icon green">CTA</div>
+              <div>
+                <strong>Live landing або no-code MVP</strong>
+                <span>Сторінка з одним чітким CTA і базовою формою заявки.</span>
+              </div>
+            </div>
+            <div class="artifact">
+              <div class="icon amber">72h</div>
+              <div>
+                <strong>Перший traffic test</strong>
+                <span>LinkedIn, Telegram, DM або інший вузький канал для перевірки попиту.</span>
+              </div>
+            </div>
+            <div class="artifact">
+              <div class="icon rose">PRD</div>
+              <div>
+                <strong>Product case і рішення</strong>
+                <span>Метрики, висновок і наступний крок: kill, iterate або build.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="band white" id="apply">
+        <div class="wrap form-layout">
+          <div class="form-copy">
+            <h2>Податися в першу групу</h2>
+            <p>
+              Перша когорта обмежена 20 учасниками. Якщо формат не підходить під
+              твій запит, я скажу це до оплати.
+            </p>
+          </div>
+          <form id="applyForm">
+            <div class="form-row">
+              <label>
+                Ім'я
+                <input name="name" autocomplete="name" required>
+              </label>
+              <label>
+                Поточна роль
+                <input name="role" placeholder="BA, PM, Project Manager" required>
+              </label>
+            </div>
+            <label>
+              Email або Telegram
+              <input name="contact" autocomplete="email" required>
+            </label>
+            <label>
+              Яку роль хочеш отримати за наступні 6 місяців?
+              <textarea name="goal" required></textarea>
+            </label>
+            <div class="form-row">
+              <label>
+                Чи є portfolio case з метриками?
+                <select name="portfolio" required>
+                  <option value="">Обери відповідь</option>
+                  <option>Ні, хочу створити</option>
+                  <option>Є навчальний кейс</option>
+                  <option>Є робочий кейс</option>
+                </select>
+              </label>
+              <label>
+                Готовність до early bird $99
+                <select name="payment" required>
+                  <option value="">Обери відповідь</option>
+                  <option>Так, якщо формат підходить</option>
+                  <option>Потрібно більше деталей</option>
+                  <option>Ні, хочу тільки безкоштовний формат</option>
+                </select>
+              </label>
+            </div>
+            <p class="note">
+              Заявка зберігається у цьому браузері для демо. Для реального збору
+              лідів форму можна під'єднати до Tally, Google Forms або Carrd.
+            </p>
+            <div class="success" id="successMessage">
+              Заявку прийнято. Дякую, я повернусь із наступним кроком.
+            </div>
+            <button class="button" type="submit">Надіслати заявку</button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <span>AI Product Proof Sprint</span>
+        <span>Problem -> test -> metrics -> decision</span>
+      </div>
+    </footer>
+
+    <script>
+      const form = document.querySelector("#applyForm");
+      const success = document.querySelector("#successMessage");
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const data = Object.fromEntries(new FormData(form).entries());
+        const previous = JSON.parse(localStorage.getItem("aiProductSprintLeads") || "[]");
+        previous.push({
+          ...data,
+          submittedAt: new Date().toISOString()
+        });
+        localStorage.setItem("aiProductSprintLeads", JSON.stringify(previous));
+        success.classList.add("visible");
+        form.reset();
+      });
+    </script>
+  </body>
+</html>
